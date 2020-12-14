@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <random>
 using namespace std;
 
 class FileHandler {
@@ -24,6 +25,8 @@ public:
     ~FileHandler();
     void sortAll();
     void printResults();
+    //optional function to generate a random list of numbers (for the input)
+    void generateRandNums(int count, string fileName);
 };
 
 #endif

@@ -1,6 +1,22 @@
 #include "FileHandler.h"
 
 FileHandler::FileHandler(string name) {
+    //user prompted stuff
+    char input;
+    cout << "Would you like to generate numbers? (Y/N)" << endl;
+    cin >> input;
+    if (input == 'Y' || input == 'y') {
+        cout << "How many numbers would you like? (max 1 million)" << endl;
+        int num;
+        cin >> num;
+        if (num > 0 && num <= 1000000) {
+            generateRandNums(num, name);
+        }
+        else {
+            generateRandNums(10000, name); //default is 10000
+        }
+    }
+
     lineCounter = 0;
     ifstream myFile(name);
     string x;
@@ -96,4 +112,21 @@ void FileHandler::printResults() {
     cout << "Initial Time: " << ctime(&bubbleInitial);
     cout << "Final Time: " << ctime(&bubbleFinal);
     cout << "Run Time: " << ctime(&bubbleDiff) << endl;
+}
+
+void FileHandler::generateRandNums(int count, string fileName) {
+    double lowerBound = 0;
+    double upperBound = 10000;
+    uniform_real_distribution<double> unif(lowerBound, upperBound); //this stuff from stacked overflow :)
+    default_random_engine re;
+
+    ofstream myFile(fileName);
+    if (myFile.is_open()) {
+        for (int i = 0; i < count; ++i) {
+            double num = unif(re);
+            myFile << num << endl;
+        }
+        myFile.close();
+    }
+    return;   
 }
